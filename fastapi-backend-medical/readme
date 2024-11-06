@@ -1,0 +1,5 @@
+Para ejecutar voy a dar el comando 
+uvicorn main:app --reload
+siempre por defecto es el puerto 8000
+
+#eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6InVzZXItZWZiZmEwMjgtZmRlNi00MmQ2LTgwYjktOGI1NTA4NzFmNjEyIn0.LHGWyAzYsL_pbdASzPEFZXwlaQE6Ny3aT4_HnyUtcZQ

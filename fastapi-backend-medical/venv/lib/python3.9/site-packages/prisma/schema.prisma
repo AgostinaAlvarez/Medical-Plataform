@@ -1,0 +1,572 @@
+generator client {
+  provider             = "prisma-client-py"
+  interface            = "asyncio"
+  recursive_type_depth = "5"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model active_medications {
+  id                                Int       @id @default(autoincrement())
+  patient_id                        String    @db.VarChar(100)
+  name                              String    @db.Text
+  dose                              Int?
+  dose_measurement                  String?   @db.VarChar(20)
+  frequency                         String?   @db.VarChar(100)
+  administration_route              String?   @db.VarChar(50)
+  start_date                        DateTime? @db.Date
+  end_date                          DateTime? @db.Date
+  duration_of_treatment             Int?
+  duration_of_treatment_measurement String?   @db.VarChar(100)
+  indications                       String?   @db.Text
+  side_effects                      String?   @db.Text
+  medication_status                 String?   @db.VarChar(50)
+  notes                             String?   @db.Text
+  pacientes                         pacientes @relation(fields: [patient_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "active_medications_ibfk_1")
+
+  @@index([patient_id], map: "patient_id")
+}
+
+model configs {
+  id                           Int       @id @default(autoincrement())
+  patient_id                   String    @db.VarChar(100)
+  user_id                      String    @db.VarChar(100)
+  stature                      Int       @default(1) @db.TinyInt
+  show_weight                  Int       @default(1) @db.TinyInt
+  show_body_mass               Int       @default(1) @db.TinyInt
+  show_temperature             Int       @default(1) @db.TinyInt
+  show_respiratory_rate        Int       @default(1) @db.TinyInt
+  show_systolic                Int       @default(1) @db.TinyInt
+  show_diastolic               Int       @default(1) @db.TinyInt
+  show_heart_rate              Int       @default(1) @db.TinyInt
+  show_body_fat_percentage     Int       @default(1) @db.TinyInt
+  show_muscle_mass             Int       @default(1) @db.TinyInt
+  show_head_circumference      Int       @default(1) @db.TinyInt
+  show_oxygen_saturation       Int       @default(1) @db.TinyInt
+  show_water_percentage        Int       @default(0) @db.TinyInt
+  show_visceral_fat_percentage Int       @default(0) @db.TinyInt
+  show_bones                   Int       @default(0) @db.TinyInt
+  show_metabolism              Int       @default(0) @db.TinyInt
+  show_protein_percentage      Int       @default(0) @db.TinyInt
+  show_body_age                Int       @default(0) @db.TinyInt
+  show_abdominal_perimeter     Int       @default(0) @db.TinyInt
+  pacientes                    pacientes @relation(fields: [patient_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "configs_ibfk_1")
+  users                        users     @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "configs_ibfk_2")
+
+  @@index([patient_id], map: "patient_id")
+  @@index([user_id], map: "user_id")
+}
+
+model hereditary_family_history {
+  id                     Int       @id @default(autoincrement())
+  patient_id             String    @db.VarChar(100)
+  diabetes               Boolean?
+  heart_disease          Boolean?
+  arterial_hypertension  Boolean?
+  thyroid_diseases       Boolean?
+  chronic_kidney_disease Boolean?
+  others                 Boolean?
+  pacientes              pacientes @relation(fields: [patient_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "hereditary_family_history_ibfk_1")
+
+  @@index([patient_id], map: "patient_id")
+}
+
+model lab_results {
+  id                                                      Int                                   @id @default(autoincrement())
+  patient_id                                              String                                @db.VarChar(100)
+  erythrocytes                                            Float?                                @db.Float
+  hematocrit                                              Float?                                @db.Float
+  hemoglobin                                              Float?                                @db.Float
+  leukocytes                                              Float?                                @db.Float
+  platelets                                               Float?                                @db.Float
+  reticulocytes                                           Float?                                @db.Float
+  blood_urea_nitrogen                                     Float?                                @db.Float
+  co2                                                     Float?                                @db.Float
+  serum_chloride                                          Float?                                @db.Float
+  serum_potassium                                         Float?                                @db.Float
+  serum_sodium                                            Float?                                @db.Float
+  creatinine                                              Float?                                @db.Float
+  calcium                                                 Float?                                @db.Float
+  blood_glucose                                           Float?                                @db.Float
+  glucose_result_origin                                   String?                               @db.VarChar(20)
+  strips_for_diabetes_detection_in_healthy_pregnant_women String?                               @db.VarChar(20)
+  total_cholesterol                                       Float?                                @db.Float
+  vldl_cholesterol                                        Float?                                @db.Float
+  ldl_cholesterol                                         Float?                                @db.Float
+  hdl_cholesterol                                         Float?                                @db.Float
+  triglycerides                                           Float?                                @db.Float
+  glycated_hemoglobin                                     Float?                                @db.Float
+  hiv_gen3                                                String?                               @db.VarChar(20)
+  hiv_gen4                                                String?                               @db.VarChar(20)
+  hepaA_IgG_IgM                                           String?                               @db.VarChar(20)
+  hepB_AS                                                 String?                               @db.VarChar(20)
+  hepB_CoreAB                                             String?                               @db.VarChar(20)
+  syphilis_Ab                                             String?                               @db.VarChar(20)
+  h_pylori_b                                              String?                               @db.VarChar(20)
+  gonorrhea_Ab                                            String?                               @db.VarChar(20)
+  chlamydia_Ab                                            String?                               @db.VarChar(20)
+  elisa_gen3                                              String?                               @db.VarChar(20)
+  elisa_gen4                                              String?                               @db.VarChar(20)
+  hiv_viral_load                                          Float?                                @db.Float
+  tb_detection                                            String?                               @db.VarChar(20)
+  tb_rif_resistance                                       String?                               @db.VarChar(20)
+  hepB_viral_load                                         Float?                                @db.Float
+  hepC_viral_load                                         Float?                                @db.Float
+  hpv_pcr                                                 String?                               @db.VarChar(20)
+  covid_19_test                                           String?                               @db.VarChar(20)
+  influenza_test                                          String?                               @db.VarChar(20)
+  prostate_specific_antigen                               String?                               @db.VarChar(20)
+  ekg_kardias                                             String?                               @db.VarChar(20)
+  urine_leukocytes                                        String?                               @db.VarChar(20)
+  nitrites                                                String?                               @db.VarChar(20)
+  urobilinogen                                            String?                               @db.VarChar(20)
+  proteins                                                String?                               @db.VarChar(20)
+  ph                                                      String?                               @db.VarChar(20)
+  blood                                                   String?                               @db.VarChar(20)
+  specific_gravity                                        String?                               @db.VarChar(20)
+  ketones                                                 String?                               @db.VarChar(20)
+  bilirubin                                               String?                               @db.VarChar(20)
+  glucose                                                 String?                               @db.VarChar(20)
+  laboratory                                              String?                               @db.VarChar(200)
+  date                                                    DateTime?                             @db.Date
+  vdrl_quantity                                           Float?                                @db.Float
+  vdrl_test_result                                        String?                               @db.VarChar(20)
+  fasting_glucose_measurement                             String?                               @db.VarChar(2)
+  reason                                                  String?                               @db.VarChar(200)
+  pacientes                                               pacientes                             @relation(fields: [patient_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "lab_results_ibfk_1")
+  lab_results_by_medical_consultation                     lab_results_by_medical_consultation[]
+
+  @@index([patient_id], map: "patient_id")
+}
+
+model medical_consultation {
+  id                                  String                                @id @db.VarChar(100)
+  patient_id                          String                                @db.VarChar(100)
+  date                                DateTime                              @db.Date
+  notes                               String?                               @db.Text
+  medical_instructions                String?                               @db.Text
+  treatment_plan                      String?                               @db.Text
+  reason                              String?                               @db.Text
+  ketosis                             ketosis[]
+  lab_requests_and_image              lab_requests_and_image[]
+  lab_results_by_medical_consultation lab_results_by_medical_consultation[]
+  pacientes                           pacientes                             @relation(fields: [patient_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "medical_consultation_ibfk_1")
+  medical_diagnosis                   medical_diagnosis[]
+  medical_prescription                medical_prescription[]
+  medical_procedure                   medical_procedure[]
+  phsycal_examination                 phsycal_examination[]
+  topographic_exploration             topographic_exploration[]
+
+  @@index([patient_id], map: "patient_id")
+}
+
+model non_pathological_history {
+  id                             Int       @id @default(autoincrement())
+  patient_id                     String    @db.VarChar(100)
+  physical_activity              Boolean?
+  smoking                        Boolean?
+  alcoholism                     Boolean?
+  recent_vaccine_or_immunization Boolean?
+  others                         Boolean?
+  drugs                          Boolean?
+  pacientes                      pacientes @relation(fields: [patient_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "non_pathological_history_ibfk_1")
+
+  @@index([patient_id], map: "patient_id")
+}
+
+model nutritional_diet {
+  id                               Int       @id @default(autoincrement())
+  patient_id                       String    @db.VarChar(100)
+  breakfast                        Boolean?
+  snack_in_the_morning             Boolean?
+  meal                             Boolean?
+  afternoon_snack                  Boolean?
+  dinner                           Boolean?
+  food_prepared_at_home            Boolean?
+  hunger_satiety                   Boolean?
+  food_preference                  String?   @db.Text
+  food_discomfort                  Boolean?
+  medications_supplements          Boolean?
+  other_diets_carried_out          Boolean?
+  ideal_weight                     Float?    @db.Float
+  current_weight_related_condition Boolean?
+  history_related_to_weight        Boolean?
+  liquid_consumption               Boolean?
+  nutrition_education              Boolean?
+  others                           Boolean?
+  appetite_level                   String?   @db.VarChar(50)
+  water_glasses                    String?   @db.VarChar(50)
+  pacientes                        pacientes @relation(fields: [patient_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "nutritional_diet_ibfk_1")
+
+  @@index([patient_id], map: "patient_id")
+}
+
+model obstetric_gynecological_history {
+  id                           Int       @id @default(autoincrement())
+  patient_id                   String    @db.VarChar(100)
+  first_menstruation           DateTime? @db.Date
+  last_menstruation            DateTime? @db.Date
+  menstruation_characteristics String?   @db.Text
+  pregnancies                  Boolean?
+  cervical_cancer              Boolean?
+  uterine_cancer               Boolean?
+  breast_cancer                Boolean?
+  patients_sexual_activity     Boolean?
+  hormone_replacement_therapy  Boolean?
+  others                       Boolean?
+  family_planning_method       String?   @db.Text
+  last_pap_smear               DateTime? @db.Date
+  last_mammography             DateTime? @db.Date
+  pacientes                    pacientes @relation(fields: [patient_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "obstetric_gynecological_history_ibfk_1")
+
+  @@index([patient_id], map: "patient_id")
+}
+
+model pacientes {
+  id                              String                            @id @db.VarChar(100)
+  name                            String                            @db.VarChar(100)
+  last_name                       String                            @db.VarChar(100)
+  birthday                        DateTime                          @db.Date
+  sex                             String                            @db.VarChar(20)
+  email                           String?                           @db.VarChar(100)
+  phone                           String?                           @db.VarChar(30)
+  identification_type             String                            @db.VarChar(30)
+  identification_number           String                            @db.VarChar(20)
+  adress                          String?                           @db.VarChar(150)
+  country                         String?                           @db.VarChar(50)
+  province                        String?                           @db.VarChar(100)
+  city                            String?                           @db.VarChar(100)
+  zip_code                        String?                           @db.VarChar(10)
+  outer_number                    String?                           @db.VarChar(30)
+  internal_number                 String?                           @db.VarChar(30)
+  active_medications              active_medications[]
+  configs                         configs[]
+  event_patient                   event_patient[]
+  hereditary_family_history       hereditary_family_history[]
+  lab_results                     lab_results[]
+  medical_consultation            medical_consultation[]
+  non_pathological_history        non_pathological_history[]
+  nutritional_diet                nutritional_diet[]
+  obstetric_gynecological_history obstetric_gynecological_history[]
+  pathological_history            pathological_history[]
+  patient_by_user                 patient_by_user[]
+  perinatal_history               perinatal_history[]
+  postnatal_history               postnatal_history[]
+  psychiatric_history             psychiatric_history[]
+  vaccines                        vaccines[]
+  vital_signs                     vital_signs[]
+}
+
+model pathological_history {
+  id                            Int       @id @default(autoincrement())
+  patient_id                    String    @db.VarChar(100)
+  previous_hospitalization      Boolean?
+  previous_surgeries            Boolean?
+  diabetes                      Boolean?
+  thyroid_diseases              Boolean?
+  arterial_hypertension         Boolean?
+  cardiopary                    Boolean?
+  trauma                        Boolean?
+  cancer                        Boolean?
+  tuberculosis                  Boolean?
+  transfusions                  Boolean?
+  respiratory_pathologies       Boolean?
+  gastrointestinal_pathologies  Boolean?
+  sexually_transmitted_diseases Boolean?
+  chronic_kidney_disease        Boolean?
+  others                        Boolean?
+  pacientes                     pacientes @relation(fields: [patient_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "pathological_history_ibfk_1")
+
+  @@index([patient_id], map: "patient_id")
+}
+
+model patient_by_user {
+  id         String    @id @db.VarChar(100)
+  user_id    String    @db.VarChar(100)
+  patient_id String    @db.VarChar(100)
+  users      users     @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "patient_by_user_ibfk_1")
+  pacientes  pacientes @relation(fields: [patient_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "patient_by_user_ibfk_2")
+
+  @@index([patient_id], map: "patient_id")
+  @@index([user_id], map: "user_id")
+}
+
+model perinatal_history {
+  id                              Int       @id @default(autoincrement())
+  patient_id                      String    @db.VarChar(100)
+  last_menstrual_cycle            DateTime? @db.Date
+  cycle_duration                  Int?
+  last_contraceptive_method_used  String?   @db.VarChar(200)
+  assisted_conception             Boolean?
+  estimated_due_date_based_on_LMP DateTime? @db.Date
+  EDD                             String?   @db.Text
+  pregnancy_notes                 String?   @db.Text
+  pacientes                       pacientes @relation(fields: [patient_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "perinatal_history_ibfk_1")
+
+  @@index([patient_id], map: "patient_id")
+}
+
+model postnatal_history {
+  id              Int       @id @default(autoincrement())
+  patient_id      String    @db.VarChar(100)
+  birth_details   String?   @db.Text
+  babys_name      String?   @db.VarChar(200)
+  birth_weight    Float?    @db.Float
+  baby_health     String?   @db.VarChar(200)
+  baby_feeding    String?   @db.VarChar(50)
+  emotional_state String?   @db.Text
+  pacientes       pacientes @relation(fields: [patient_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "postnatal_history_ibfk_1")
+
+  @@index([patient_id], map: "patient_id")
+}
+
+model psychiatric_history {
+  id                                      Int       @id @default(autoincrement())
+  patient_id                              String    @db.VarChar(100)
+  family_history                          String?   @db.Text
+  disease_awareness                       Boolean?
+  areas_affected_by_the_disease           String?   @db.Text
+  past_and_current_treatments             String?   @db.Text
+  support_from_the_family_or_social_group Boolean?
+  patients_family_group                   String?   @db.Text
+  aspects_of_social_life                  String?   @db.Text
+  aspects_of_working_life                 String?   @db.Text
+  relationship_with_authority             String?   @db.Text
+  impulse_control                         Boolean?
+  managing_frustration                    Boolean?
+  pacientes                               pacientes @relation(fields: [patient_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "psychiatric_history_ibfk_1")
+
+  @@index([patient_id], map: "patient_id")
+}
+
+model users {
+  id              String            @id @db.VarChar(100)
+  email           String            @db.VarChar(100)
+  password        String            @db.VarChar(100)
+  configs         configs[]
+  events          events[]
+  patient_by_user patient_by_user[]
+}
+
+model vaccines {
+  id               Int       @id @default(autoincrement())
+  patient_id       String    @db.VarChar(100)
+  application_date DateTime? @db.Date
+  next_dose        DateTime? @db.Date
+  batch            String?   @db.VarChar(100)
+  notes            String?   @db.Text
+  name             String?   @db.VarChar(300)
+  pacientes        pacientes @relation(fields: [patient_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "vaccines_ibfk_1")
+
+  @@index([patient_id], map: "patient_id")
+}
+
+model vital_signs {
+  id                      Int       @id @default(autoincrement())
+  patient_id              String    @db.VarChar(100)
+  stature                 Float?    @db.Float
+  weight                  Float?    @db.Float
+  body_mass               Float?    @db.Float
+  temperature             Float?    @db.Float
+  respiratory_rate        Float?    @db.Float
+  systolic                Float?    @db.Float
+  diastolic               Float?    @db.Float
+  heart_rate              Float?    @db.Float
+  body_fat_percentage     Float?    @db.Float
+  muscle_mass             Float?    @db.Float
+  head_circumference      Float?    @db.Float
+  oxygen_saturation       Float?    @db.Float
+  water_percentage        Float?    @db.Float
+  visceral_fat_percentage Float?    @db.Float
+  bones                   Float?    @db.Float
+  metabolism              Float?    @db.Float
+  protein_percentage      Float?    @db.Float
+  body_age                Float?    @db.Float
+  abdominal_perimeter     Float?    @db.Float
+  pacientes               pacientes @relation(fields: [patient_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "vital_signs_ibfk_1")
+
+  @@index([patient_id], map: "patient_id")
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+model ketosis {
+  id                      Int                  @id @default(autoincrement())
+  medical_consultation_id String               @db.VarChar(100)
+  satiety                 Int?                 @db.TinyInt
+  cramps                  Int?                 @db.TinyInt
+  diarrhea                Int?                 @db.TinyInt
+  depressed               Int?                 @db.TinyInt
+  tolerance               Int?                 @db.TinyInt
+  constipation            Int?                 @db.TinyInt
+  dizziness               Int?                 @db.TinyInt
+  anxiety                 Int?                 @db.TinyInt
+  irritability            Int?                 @db.TinyInt
+  impulse_control         Int?                 @db.TinyInt
+  bad_breath              Int?                 @db.TinyInt
+  hunger                  Int?                 @db.TinyInt
+  sleep_problems          Int?                 @db.TinyInt
+  impatience              Int?                 @db.TinyInt
+  need_for_stimulants     Int?                 @db.TinyInt
+  migraine_or_headache    Int?                 @db.TinyInt
+  fatigue                 Int?                 @db.TinyInt
+  concentration           Int?                 @db.TinyInt
+  aggressiveness          Int?                 @db.TinyInt
+  medical_consultation    medical_consultation @relation(fields: [medical_consultation_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "ketosis_ibfk_1")
+
+  @@index([medical_consultation_id], map: "medical_consultation_id")
+}
+
+model lab_requests_and_image {
+  id                      Int                  @id @default(autoincrement())
+  medical_consultation_id String               @db.VarChar(100)
+  name                    String               @db.VarChar(200)
+  notes                   String?              @db.Text
+  medical_consultation    medical_consultation @relation(fields: [medical_consultation_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "lab_requests_and_image_ibfk_1")
+
+  @@index([medical_consultation_id], map: "medical_consultation_id")
+}
+
+model medical_diagnosis {
+  id                      Int                  @id @default(autoincrement())
+  medical_consultation_id String               @db.VarChar(100)
+  code                    String?              @db.VarChar(15)
+  description             String?              @db.Text
+  notes                   String?              @db.Text
+  medical_consultation    medical_consultation @relation(fields: [medical_consultation_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "medical_diagnosis_ibfk_1")
+
+  @@index([medical_consultation_id], map: "medical_consultation_id")
+}
+
+model medical_prescription {
+  id                          Int                           @id @default(autoincrement())
+  medical_consultation_id     String                        @db.VarChar(100)
+  medical_instructions        String?                       @db.Text
+  medical_consultation        medical_consultation          @relation(fields: [medical_consultation_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "medical_prescription_ibfk_1")
+  medical_prescription_detail medical_prescription_detail[]
+
+  @@index([medical_consultation_id], map: "medical_consultation_id")
+}
+
+model medical_prescription_detail {
+  id                      Int                  @id @default(autoincrement())
+  medical_prescription_id Int
+  name                    String               @db.VarChar(300)
+  dose                    String?              @db.VarChar(100)
+  frequency               String?              @db.VarChar(100)
+  duration_of_treatment   String?              @db.VarChar(100)
+  medical_prescription    medical_prescription @relation(fields: [medical_prescription_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "medical_prescription_detail_ibfk_1")
+
+  @@index([medical_prescription_id], map: "medical_prescription_id")
+}
+
+model medical_procedure {
+  id                      Int                  @id @default(autoincrement())
+  medical_consultation_id String               @db.VarChar(100)
+  name                    String               @db.VarChar(200)
+  notes                   String?              @db.Text
+  medical_consultation    medical_consultation @relation(fields: [medical_consultation_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "medical_procedure_ibfk_1")
+
+  @@index([medical_consultation_id], map: "medical_consultation_id")
+}
+
+model phsycal_examination {
+  id                            Int                  @id @default(autoincrement())
+  medical_consultation_id       String               @db.VarChar(100)
+  digestive_system              String?              @db.Text
+  reproductive_system           String?              @db.Text
+  urinary_system                String?              @db.Text
+  cardiac_and_vascular          String?              @db.Text
+  dental                        String?              @db.Text
+  dermatological                String?              @db.Text
+  neurological                  String?              @db.Text
+  osteoarticular                String?              @db.Text
+  otolaryngologist              String?              @db.Text
+  psychiatric_and_psychological String?              @db.Text
+  pulmonary_or_respiratory      String?              @db.Text
+  lymphatic_system              String?              @db.Text
+  medical_consultation          medical_consultation @relation(fields: [medical_consultation_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "phsycal_examination_ibfk_1")
+
+  @@index([medical_consultation_id], map: "medical_consultation_id")
+}
+
+model topographic_exploration {
+  id                          Int                  @id @default(autoincrement())
+  medical_consultation_id     String               @db.VarChar(100)
+  head_front_part             String?              @db.Text
+  head_back_part              String?              @db.Text
+  neck_front_part             String?              @db.Text
+  neck_back_part              String?              @db.Text
+  upper_limb_left_front_part  String?              @db.Text
+  upper_limb_left_back_part   String?              @db.Text
+  upper_limb_right_front_part String?              @db.Text
+  upper_limb_right_back_part  String?              @db.Text
+  trunk_front_part            String?              @db.Text
+  trunk_back_part             String?              @db.Text
+  lower_limb_left_front_part  String?              @db.Text
+  lower_limb_left_back_part   String?              @db.Text
+  lower_limb_right_front_part String?              @db.Text
+  lower_limb_right_back_part  String?              @db.Text
+  pelvic_area_front           String?              @db.Text
+  pelvic_area_back            String?              @db.Text
+  medical_consultation        medical_consultation @relation(fields: [medical_consultation_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "topographic_exploration_ibfk_1")
+
+  @@index([medical_consultation_id], map: "medical_consultation_id")
+}
+
+model lab_results_by_medical_consultation {
+  id                      Int                  @id @default(autoincrement())
+  lab_result_id           Int
+  medical_consultation_id String               @db.VarChar(100)
+  lab_results             lab_results          @relation(fields: [lab_result_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "lab_results_by_medical_consultation_ibfk_1")
+  medical_consultation    medical_consultation @relation(fields: [medical_consultation_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "lab_results_by_medical_consultation_ibfk_2")
+
+  @@index([lab_result_id], map: "lab_result_id")
+  @@index([medical_consultation_id], map: "medical_consultation_id")
+}
+
+model event_patient {
+  id         Int       @id @default(autoincrement())
+  event_id   String    @db.VarChar(100)
+  patient_id String    @db.VarChar(100)
+  events     events    @relation(fields: [event_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "event_patient_ibfk_1")
+  pacientes  pacientes @relation(fields: [patient_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "event_patient_ibfk_2")
+
+  @@index([event_id], map: "event_id")
+  @@index([patient_id], map: "patient_id")
+}
+
+model event_prospective_patient {
+  id                     Int                  @id @default(autoincrement())
+  event_id               String               @db.VarChar(100)
+  prospective_patient_id Int
+  events                 events               @relation(fields: [event_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "event_prospective_patient_ibfk_1")
+  prospective_patients   prospective_patients @relation(fields: [prospective_patient_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "event_prospective_patient_ibfk_2")
+
+  @@index([event_id], map: "event_id")
+  @@index([prospective_patient_id], map: "prospective_patient_id")
+}
+
+model events {
+  id                        String                      @id @db.VarChar(100)
+  user_id                   String                      @db.VarChar(100)
+  asocciate_patient         Boolean?
+  date                      DateTime                    @db.Date
+  hour                      DateTime?                   @db.Time(0)
+  event_patient             event_patient[]
+  event_prospective_patient event_prospective_patient[]
+  users                     users                       @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "events_ibfk_1")
+
+  @@index([user_id], map: "user_id")
+}
+
+model prospective_patients {
+  id                        Int                         @id @default(autoincrement())
+  name                      String                      @db.VarChar(100)
+  last_name                 String?                     @db.VarChar(100)
+  contact_number            String?                     @db.VarChar(50)
+  email                     String?                     @db.VarChar(100)
+  event_prospective_patient event_prospective_patient[]
+}
