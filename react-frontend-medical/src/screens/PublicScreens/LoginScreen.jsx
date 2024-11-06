@@ -11,6 +11,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { apiPost } from "../../utils/Api";
 import { default_header } from "../../utils/Headers";
 import { AppContext } from "../../context/AppContext";
+import image from "../../assets/bg.png";
 
 const LoginScreen = () => {
   const {
@@ -131,7 +132,9 @@ const LoginScreen = () => {
           </span>
         </form>
       </div>
-      <div className="login-col login-right-col"></div>
+      <div className="login-col login-right-col">
+        <img src={image} style={{ width: "100%", margin: "auto 0px" }} />
+      </div>
     </div>
   );
 };

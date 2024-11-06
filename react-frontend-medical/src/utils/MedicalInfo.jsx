@@ -5109,12 +5109,12 @@ export const topographic_exploration_options = [
     column_name: "upper_limb_right_back_part",
   },
   {
-    label: "Tronto Parte Frontal",
+    label: "Tronco Parte Frontal",
     value: 8,
     column_name: "trunk_front_part",
   },
   {
-    label: "Tronto Parte Posterior",
+    label: "Tronco Parte Posterior",
     value: 9,
     column_name: "trunk_back_part",
   },

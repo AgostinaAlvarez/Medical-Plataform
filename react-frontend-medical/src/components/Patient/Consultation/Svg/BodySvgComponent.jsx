@@ -1,7 +1,7 @@
 import React from "react";
 
 const BodySvgComponent = () => {
-  const selected = false;
+  const selected = true;
   return (
     <svg
       version="1.1"
@@ -58,7 +58,14 @@ const BodySvgComponent = () => {
           className="_st1_1l5red"
         ></path>
       </g>
-      <g data-part="9" className="_front-trunk_1l5red">
+      <g
+        data-part="9"
+        className={
+          selected === true
+            ? "_front-trunk_1l5red _front-trunk_1l5red-cta"
+            : "_front-trunk_1l5red"
+        }
+      >
         <path d="M185.2,342c0.4,6.9,3.1,13.3,4.2,20c2.5,14.4,6.2,28.5,8.2,43c0.8,6.2,2.3,12.2,2,18.5l0.4,6  c2.9,2.3,3,5.9,3.4,9c0.9,7.8,1.7,15.6,2.4,23.5c0.6,6.5,0.9,13,0.7,19.5c-0.4,12.3-2.6,24.3-6.8,36c-5.9,16.3-9.9,32.9-9.1,50.5  c0.6,12.7-0.4,25.4-2.1,38c-1.1,8.6-3.9,17-4.7,25.5c-0.8,8.4-2.7,19.1-3.4,27.6l241.3-9.7c-1.3-10.7-3.9-23.7-5.5-34.4  c-1.6-10.5-2.9-20.9-3.5-31.5c-0.6-10,0.5-20-0.9-30c-1.3-9.3-2.3-18.6-5.7-27.5c-6.7-17.7-10.7-35.9-9.5-55c0.6-9,0.8-18.1,2.2-27  c0.8-4.9-0.1-10.6,4.3-14.5l0.2-6c-0.3-6.3,1.2-12.4,2-18.5c2-14.5,5.7-28.6,8.2-43c1.2-6.7,3.8-13.1,4.2-20l-56.4-98.1l-118.9,0.9  L185.2,342z"></path>
       </g>
       <g data-part="10" className="_back-trunk_1l5red">

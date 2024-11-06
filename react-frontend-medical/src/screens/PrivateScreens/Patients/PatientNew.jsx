@@ -64,9 +64,12 @@ const PatientNew = () => {
             <FaUser style={{ fontSize: "70px", color: "white" }} />
           </div>
           <div className="btn-border pacient-new-img-btn">Adjuntar foto</div>
-          <PrincipalCard title={"Notas internas"}>
-            <TextArea rows={4} style={{ height: "250px" }} />
-          </PrincipalCard>
+          {/*
+            <PrincipalCard title={"Notas internas"}>
+              <TextArea rows={4} style={{ height: "250px" }} />
+            </PrincipalCard>
+            
+            */}
         </div>
         <form
           onSubmit={handleSubmit(onSubmit)}

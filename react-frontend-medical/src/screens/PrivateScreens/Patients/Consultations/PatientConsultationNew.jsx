@@ -555,7 +555,9 @@ const PatientConsultationNew = () => {
                       name={`topographic_exploration.${item.column_name}`}
                       control={control}
                       defaultValue={null}
-                      render={({ field }) => <TextArea {...field} />}
+                      render={({ field }) => (
+                        <TextArea {...field} style={{ height: "200px" }} />
+                      )}
                     />
                   </PrincipalCard>
                 ))}
@@ -883,7 +885,9 @@ const PatientConsultationNew = () => {
             </div>
           </div>
         </PrincipalCard>
-
+        <button type="submit">Guardar</button>
+        {/*
+          
         <ConfigProvider
           theme={{
             token: {
@@ -891,10 +895,11 @@ const PatientConsultationNew = () => {
             },
           }}
         >
-          <Button key="submit" type="primary">
+          <Button  key="submit" type="primary">
             Guardar
           </Button>
         </ConfigProvider>
+          */}
       </form>
     </>
   );

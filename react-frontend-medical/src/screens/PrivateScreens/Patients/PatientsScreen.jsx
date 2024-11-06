@@ -200,9 +200,7 @@ const PatientsScreen = () => {
                                 {record.name.charAt(0)}
                                 {record.last_name.charAt(0)}
                               </div>
-                              {/*
-                              <FaUserCircle style={{ fontSize: "28px", color }} />
-                              */}
+
                               <span>
                                 {record.name} {record.last_name}
                               </span>

@@ -27,17 +27,18 @@ const PatientLabResultNew = () => {
   const navigate = useNavigate();
 
   const saveChanges = async (data) => {
-    setLoading(true);
     const { date, ...data_objt } = data;
     const restructured_data = transform_data_object_number_valur(data_objt);
-
     const request_data = {
       date: data.date ? data.date.format("YYYY-MM-DD") : null,
       ...restructured_data,
     };
+    console.log(request_data);
+
+    setLoading(true);
 
     const { data: response, error } = await apiPost(
-      `${import.meta.env.VITE_API_BACK_URL}/event/create`,
+      `${import.meta.env.VITE_API_BACK_URL}/lab-results/create`,
       request_data,
       header_private(token)
     );

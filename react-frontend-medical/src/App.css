@@ -239,7 +239,10 @@
 }
 
 .login-right-col {
-  background-color: red;
+  background-color: #b9ddff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .login-form {
@@ -1163,6 +1166,12 @@ svg._physiotherapy-body_1l5red g._front-trunk_1l5red:hover {
   fill: #9be5d8;
 }
 
+/*torzo activo*/
+svg._physiotherapy-body_1l5red g._front-trunk_1l5red._active_1l5red,
+svg._physiotherapy-body_1l5red g._front-trunk_1l5red-cta {
+  fill: #9be5d8;
+}
+
 /*PELVIS*/
 svg._physiotherapy-body_1l5red g._back-head_1l5red._active_1l5red,
 svg._physiotherapy-body_1l5red g._back-head_1l5red:hover,
@@ -1271,12 +1280,10 @@ svg._physiotherapy-body_1l5red g._back-right-leg_1l5red:hover {
   }
 
   .patient-detail-label-responsive {
-    color: red;
     font-size: 12px;
   }
 
   .patient-card-label-responsive {
-    color: blue;
     font-size: 13px;
   }
   /**/
@@ -1378,12 +1385,10 @@ svg._physiotherapy-body_1l5red g._back-right-leg_1l5red:hover {
   }
 
   .patient-detail-label-responsive {
-    color: red;
     font-size: 11px;
   }
 
   .patient-card-label-responsive {
-    color: blue;
     font-size: 12px;
   }
 

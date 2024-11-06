@@ -29,6 +29,7 @@ import { GoPlusCircle } from "react-icons/go";
 import { FaUsers } from "react-icons/fa";
 import { GiChemicalDrop } from "react-icons/gi";
 import { FiFilter } from "react-icons/fi";
+import { colors } from "../../../utils/Colors";
 
 const { RangePicker } = DatePicker;
 
@@ -64,9 +65,18 @@ const ActionsComponent = ({ record }) => {
         className="row"
         style={{ gap: "15px", zIndex: 60, fontSize: "19px" }}
       >
-        <MdOutlineRemoveRedEye onClick={viewConsultation} />
-        <AiOutlineEdit onClick={viewConsultation} />
-        <BsTrash3 onClick={handleOpenModal} />
+        <div className="table-action-icon table-action-icon-edit">
+          <AiOutlineEdit />
+        </div>
+        <div className="table-action-icon table-action-icon-delete">
+          <BsTrash3 />
+        </div>
+        {/*
+          <MdOutlineRemoveRedEye onClick={viewConsultation} />
+          <AiOutlineEdit onClick={viewConsultation} />
+          <BsTrash3 onClick={handleOpenModal} />
+          
+          */}
       </div>
       <Modal
         title="Eliminar"
@@ -549,8 +559,32 @@ const LabResultsScreen = () => {
                     {
                       title: "Paciente",
                       key: "full_name",
-                      render: (text, record) =>
-                        `${record.patient_name} ${record.patient_last_name}`,
+
+                      render: (text, record, index) => {
+                        // Seleccionar un color del array de colores usando el índice y el operador módulo
+                        const color = colors[index % colors.length];
+
+                        return (
+                          <div className="patient-table-name-container row">
+                            <div
+                              className="icon-container"
+                              style={{
+                                backgroundColor: color,
+                                height: "30px",
+                                width: "30px",
+                                fontSize: "11px",
+                              }}
+                            >
+                              {record.patient_name.charAt(0)}
+                              {record.patient_last_name.charAt(0)}
+                            </div>
+
+                            <span>
+                              {record.patient_name} {record.patient_last_name}
+                            </span>
+                          </div>
+                        );
+                      },
                       onCell: (record) => ({
                         onClick: () => {
                           viewLabResult(record);
