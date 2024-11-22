@@ -35,3 +35,10 @@ export const apiDelete = async (url, data, headers) => {
     return { data: null, error: err };
   }
 };
+
+/*
+ data, { headers: {
+  "Content-Type": "application/json",
+} }
+
+*/

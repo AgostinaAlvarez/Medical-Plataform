@@ -18,11 +18,6 @@ const FormComponent = ({ item, responses, health_history_item, closeForm }) => {
   const { token, patientData, setPatientData } = useContext(AppContext);
   const [data, setData] = useState(responses);
   const [loading, setLoading] = useState(false);
-  useEffect(() => {
-    console.log(responses);
-    console.log("nombre del item");
-    console.log(health_history_item);
-  }, []);
 
   const saveChanges = async () => {
     setLoading(true);
@@ -46,7 +41,6 @@ const FormComponent = ({ item, responses, health_history_item, closeForm }) => {
         closeForm();
       }, 2000);
     } else {
-      console.log(error);
       setTimeout(() => {
         setLoading(false);
         message.error("Algo salio mal! Intentalo nuevamente");

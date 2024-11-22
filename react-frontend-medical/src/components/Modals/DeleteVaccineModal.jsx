@@ -16,7 +16,6 @@ const DeleteVaccineModal = ({
 
   const handleOk = async () => {
     setLoading(true);
-    console.log("eliminar");
     setLoadingModalDelete(true);
 
     try {
@@ -30,9 +29,6 @@ const DeleteVaccineModal = ({
           data: modalVaccineData, // El cuerpo de la solicitud DELETE con el JSON que deseas enviar
         }
       );
-
-      console.log(response);
-
       const updateVaccines = patientData.vaccines.filter(
         (item) => item.id !== modalVaccineData.id
       );
@@ -42,15 +38,12 @@ const DeleteVaccineModal = ({
         setLoadingModalDelete(false);
         setIsDeleteModalOpen(false);
         message.success("Vacuna eliminada correctamente");
-        //setLoading(false);
       }, 1500);
     } catch (error) {
-      console.log(error);
       setTimeout(() => {
         setLoadingModalDelete(false);
         setIsDeleteModalOpen(false);
         message.error("Algo salio mal intentalo nuevamente mas tarde");
-        //setLoading(false);
       }, 1500);
     }
   };

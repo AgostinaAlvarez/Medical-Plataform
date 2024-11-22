@@ -60,7 +60,6 @@ const PatientInfoCard = () => {
       ...formattedData,
       birthday: patientData.patient.birthday,
     };
-    console.log(request_data);
 
     const { data: response, error } = await apiPut(
       `${import.meta.env.VITE_API_BACK_URL}/patient/edit`,
@@ -69,8 +68,6 @@ const PatientInfoCard = () => {
     );
 
     if (response) {
-      console.log("paciente editado:");
-      console.log(response);
       setPatientData({ ...patientData, patient: response });
       setTimeout(() => {
         setLoading(false);
@@ -78,8 +75,6 @@ const PatientInfoCard = () => {
         setEditPatientInfo(false);
       }, 2000);
     } else {
-      console.log("error");
-      console.log(error);
       setTimeout(() => {
         setLoading(false);
         message.error("Algo salio mal! Intentalo nuevamente");

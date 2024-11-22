@@ -19,6 +19,8 @@ import { GoDotFill } from "react-icons/go";
 import { transformDate } from "../../../functions/functions";
 import EditActiveMedicationModal from "../../Modals/EditActiveMedicationModal";
 import DeleteActiveMedicationModal from "../../Modals/DeleteActiveMedicationModal";
+import { header_private } from "../../../utils/Headers";
+import { apiPost } from "../../../utils/Api";
 
 const ActiveMedicationForm = ({
   setSelectedMedication,
@@ -41,6 +43,7 @@ const ActiveMedicationForm = ({
   });
 
   const saveChanges = async (data) => {
+    setLoading(true);
     const formattedData = {
       ...data,
       start_date: data.start_date ? data.start_date.format("YYYY-MM-DD") : null,
@@ -51,7 +54,36 @@ const ActiveMedicationForm = ({
         : null,
     };
 
-    console.log(formattedData);
+    //console.log(formattedData);
+    const request_data = {
+      ...formattedData,
+      patient_id: patientData.patient.id,
+    };
+
+    //PETICION
+    const { data: response, error } = await apiPost(
+      `${import.meta.env.VITE_API_BACK_URL}/active-medication/create`,
+      request_data,
+      header_private(token)
+    );
+
+    if (response) {
+      setPatientData({
+        ...patientData,
+        active_medications: [...patientData.active_medications, response],
+      });
+      setTimeout(() => {
+        setLoading(false);
+        message.success("Medicamento Activo agregado correctamente");
+        cancelChanges();
+      }, 2000);
+    } else {
+      setTimeout(() => {
+        setLoading(false);
+        message.error("algo salio mal, intentalo de nuevo mas tarde!");
+        cancelChanges();
+      }, 2000);
+    }
   };
 
   function cancelChanges() {

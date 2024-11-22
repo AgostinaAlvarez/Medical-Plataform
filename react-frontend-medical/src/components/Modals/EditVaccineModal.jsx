@@ -64,7 +64,6 @@ const EditVaccineModal = ({
         setIsModalOpen(false);
       }, 1500);
     } else {
-      console.log(error);
       setTimeout(() => {
         setLoadingModal(false);
         message.error("Algo salio mal intentalo nuevamente mas tarde");

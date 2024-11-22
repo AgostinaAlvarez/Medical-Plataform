@@ -30,7 +30,6 @@ function App() {
   };
 
   const allowAccess = () => {
-    console.log(userData);
     setLogged(true);
     setTimeout(() => {
       setLoading(false);

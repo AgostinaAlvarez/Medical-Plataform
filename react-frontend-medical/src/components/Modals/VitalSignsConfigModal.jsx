@@ -36,7 +36,6 @@ const VitalSignsConfigModal = ({
     );
 
     if (response) {
-      console.log(response);
       setPatientData({ ...patientData, configs: response });
       setTimeout(() => {
         setLoadingModal(false);
@@ -45,7 +44,6 @@ const VitalSignsConfigModal = ({
         setLoading(false);
       }, 1500);
     } else {
-      console.log(error);
       setTimeout(() => {
         setLoadingModal(false);
         message.error("Algo salio mal intentalo nuevamente mas tarde");

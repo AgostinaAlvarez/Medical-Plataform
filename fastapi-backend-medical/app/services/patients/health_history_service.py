@@ -18,6 +18,13 @@ from app.models.patients.medical_hisotry_models import PerinatalHistoryResponse
 from app.persistence.medicalhisotry.postnatal_history_repository import update as edit_postnatal_history
 from app.models.patients.medical_hisotry_models import PostnatalHistoryResponse
 
+from app.persistence.medicalhisotry.psychiatric_history_repository import update as edit_psychiatric_history
+from app.models.patients.medical_hisotry_models import PsychiatricHistoryResponse
+
+from app.persistence.medicalhisotry.nutritional_diet_repository import update as edit_nutritional_diet
+from app.models.patients.medical_hisotry_models import NutritionalDietResponse
+
+
 class HealthHistory:
 
     async def update_pathological_history(self, data):
@@ -69,9 +76,18 @@ class HealthHistory:
         return postnatal_history
 
     async def update_psychiatric_history(self, data):
-        _data = data.dict(exclude={"id"})
+        psychiatric_history_data = data.dict(exclude={"id"})
         id = data.id
+
+        psychiatric_history = await edit_psychiatric_history(data=psychiatric_history_data, id=id)
+        psychiatric_history = PsychiatricHistoryResponse(**psychiatric_history.dict())
+        return psychiatric_history
     
     async def update_nutritional_diet(self, data):
-        _data = data.dict(exclude={"id"})
+        nutritional_diet_data = data.dict(exclude={"id"})
         id = data.id
+
+        nutritional_diet = await edit_nutritional_diet(data=nutritional_diet_data, id=id)
+        nutritional_diet = NutritionalDietResponse(**nutritional_diet.dict())
+        return nutritional_diet
+

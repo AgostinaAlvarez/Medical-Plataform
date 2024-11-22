@@ -19,7 +19,7 @@ const MySvgComponent = () => {
         data-part="3"
         className="_front-neck_1l5red"
         onClick={() => {
-          console.log("seleccion de cuello");
+          //console.log("seleccion de cuello");
         }}
       >
         <path
